@@ -115,7 +115,7 @@ class WebSqlStore<V> extends Store<V> {
     var val = [key, JSON.encode(obj)].toList();
     if(_idxPaths!=null && _idxPaths.isNotEmpty){
       if(obj is Map){
-        Map objM = obj;
+        var objM = obj;
         _idxPaths.forEach((String col){
           val.add(objM[col]);
         });
@@ -371,7 +371,7 @@ class WebSqlStore<V> extends Store<V> {
           var val = [key, JSON.encode(obj)].toList();
           if(_idxPaths!=null && _idxPaths.isNotEmpty){
             if(obj is Map){
-              Map objM = obj;
+              var objM = obj;
               _idxPaths.forEach((String col){
                 val.add(objM[col]);
               });

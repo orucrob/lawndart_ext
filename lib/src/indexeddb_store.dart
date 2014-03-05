@@ -77,7 +77,7 @@ class IndexedDbStore<V> extends Store<V> {
     if (!db.objectStoreNames.contains(storeName) || !_checkIndexes(db)) {
       db.close();
       //print('Attempting upgrading $storeName from ${db.version}');
-      return window.indexedDB.open(dbName, version: db.version + 1,
+      return window.indexedDB.open(dbName, version: int.parse("${db.version}", radix:10) + 1,
           onUpgradeNeeded: (e) {
             //print('Upgrading db $dbName to ${db.version + 1}');
             idb.Database db = e.target.result;
