@@ -5,4 +5,5 @@ packages
 .buildlog
 build.snapshot
 out
+build
 test/*.js*

@@ -1,9 +1,8 @@
-name: lawndart
+name: lawndart_ext
 version: 0.6.5
-author: Seth Ladd <sethladd@gmail.com>
+author: Seth Ladd <sethladd@gmail.com>, ext- rob oruc
 description: An easier way to access storage APIs in the browser.
-homepage: https://github.com/sethladd/lawndart
-documentation: http://sethladd.github.com/lawndart/
+homepage: https://github.com/sethladd/lawndart, https://github.com/orucrob/lawndart
 dev_dependencies:
   browser: any
   hop: any

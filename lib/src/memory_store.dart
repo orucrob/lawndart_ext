@@ -12,7 +12,7 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
-part of lawndart;
+part of lawndart_ext;
 
 class MemoryStore<V> extends _MapStore<V> {
   @override

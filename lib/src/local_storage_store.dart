@@ -12,7 +12,7 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
-part of lawndart;
+part of lawndart_ext;
 
 /**
  * Wraps the local storage API and exposes it as a [Store].

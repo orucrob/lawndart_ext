@@ -40,18 +40,29 @@ following: local storage, indexed db, and websql.
 See the `example/` directory for more sample code.
 
 */
-library lawndart;
+library lawndart_ext;
 
 import 'dart:html';
 import 'dart:indexed_db' as idb;
 import 'dart:web_sql';
 import 'dart:async';
+import 'dart:convert';
+//import 'dart:html';
 
 part 'src/indexeddb_store.dart';
 part 'src/_map_store.dart';
 part 'src/memory_store.dart';
 part 'src/local_storage_store.dart';
 part 'src/websql_store.dart';
+
+class IndexDesc{
+  String name;
+  dynamic keyPath;
+  bool unique;
+  bool multi;
+  String websqlType; //only TEXT or  NUMERIC are allowed because of auto conversion of values
+  IndexDesc(this.name, this.keyPath, {this.unique:false, this.multi:false, this.websqlType : "TEXT"});
+}
 
 /**
  * Represents a Store that can hold key/value pairs. No order
@@ -69,14 +80,14 @@ abstract class Store<V> {
   /**
    * Finds the best implementation. In order: IndexedDB, WebSQL, LocalStorage.
    */
-  factory Store(String dbName, String storeName, [Map options]) {
+  factory Store(String dbName, String storeName, {Map options, List<IndexDesc> indexes}) {
     if (IndexedDbStore.supported) {
-      return new IndexedDbStore(dbName, storeName);
+      return new IndexedDbStore(dbName, storeName, indexes: indexes);
     } else if (WebSqlStore.supported) {
       if (options != null && options['estimatedSize']) {
-        return new WebSqlStore(dbName, storeName, estimatedSize: options['estimatedSize']);
+        return new WebSqlStore(dbName, storeName, estimatedSize: options['estimatedSize'], indexes: indexes);
       } else {
-        return new WebSqlStore(dbName, storeName);
+        return new WebSqlStore(dbName, storeName, indexes: indexes);
       }
     } else {
       return new LocalStorageStore();
@@ -90,7 +101,7 @@ abstract class Store<V> {
   /// Returns a Future that completes when the store is opened.
   /// You must call this method before using
   /// the store.
-  Future open();
+  Future open({force: false});
 
   /// Returns all the keys as a stream. No order is guaranteed.
   Stream<String> keys() {
@@ -152,6 +163,13 @@ abstract class Store<V> {
   }
   Stream<V> _all();
 
+  /// Returns a Stream of all values in no particular order.
+  Stream<V> allByIndex(String idxName,{Object only, Object lower, Object upper, bool lowerOpen:false, bool upperOpen:false, String direction} ) {
+    _checkOpen();
+    return _allByIndex(idxName, only:only, lower:lower, upper:upper, lowerOpen:lowerOpen, upperOpen:upperOpen, direction:direction);
+  }
+  Stream<V> _allByIndex(String idxName,{Object only, Object lower, Object upper, bool lowerOpen:false, bool upperOpen:false, String direction});
+
   /// Returns a Future that completes when the key's value is removed.
   Future removeByKey(String key) {
     _checkOpen();
@@ -173,4 +191,11 @@ abstract class Store<V> {
     return _nuke();
   }
   Future _nuke();
+
+  /// Returns a Future that completes when store is removed
+  Future drop() {
+    _checkOpen();
+    return _drop();
+  }
+  Future _drop();
 }

@@ -1,11 +1,11 @@
-import 'package:lawndart/lawndart.dart';
+import 'package:lawndart_ext/lawndart_ext.dart';
 import 'dart:indexed_db';
 import 'dart:html';
 import 'dart:async';
 
 main() {
   Store store;
-  
+
   window.indexedDB.deleteDatabase('temptestdb').then((_) {
     store = new Store('temptestdb', 'store1');
     store.open()
@@ -23,8 +23,8 @@ main() {
         query('#text').text = 'all done';
       });
   });
-  
-  
+
+
 //  window.indexedDB.deleteDatabase('justtesting')
 //  .then((_) {
 //    print('opening');

@@ -12,14 +12,14 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
-part of lawndart;
+part of lawndart_ext;
 
 abstract class _MapStore<V> extends Store<V> {
   Map<String, V> storage;
-  
+
   _MapStore() : super._();
 
-  Future<bool> open() {
+  Future<bool> open({force: false}) {
     storage = _generateMap();
     _isOpen = true;
     return new Future.value(true);
@@ -59,6 +59,11 @@ abstract class _MapStore<V> extends Store<V> {
   Stream<V> _all() {
     return new Stream.fromIterable(storage.values);
   }
+  @override
+  Stream<V> _allByIndex(String idxName,{Object only, Object lower, Object upper, bool lowerOpen:false, bool upperOpen:false, String direction} ) {
+    //TODO
+  }
+
 
   Future _removeByKey(String key) {
     storage.remove(key);
@@ -71,6 +76,10 @@ abstract class _MapStore<V> extends Store<V> {
   }
 
   Future _nuke() {
+    storage.clear();
+    return new Future.value(true);
+  }
+  Future _drop() {
     storage.clear();
     return new Future.value(true);
   }

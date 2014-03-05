@@ -4,7 +4,7 @@ import 'dart:async';
 import 'dart:indexed_db';
 import 'dart:web_sql';
 import 'package:unittest/unittest.dart';
-import 'package:lawndart/lawndart.dart';
+import 'package:lawndart_ext/lawndart_ext.dart';
 
 typedef Store<String> StoreGenerator();
 

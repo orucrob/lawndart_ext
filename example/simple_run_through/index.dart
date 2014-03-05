@@ -1,6 +1,6 @@
 library index;
 
-import 'package:lawndart/lawndart.dart';
+import 'package:lawndart_ext/lawndart_ext.dart';
 import 'dart:html';
 import 'dart:web_sql';
 import 'dart:indexed_db';
@@ -25,7 +25,7 @@ main() {
   } else {
     querySelector('#websql').text = 'WebSQL is not supported in your browser';
   }
-  
+
   if (IdbFactory.supported) {
     runThrough(new IndexedDbStore('test', 'test'), 'indexeddb');
   } else {
